@@ -14,15 +14,14 @@ export function getConfig(): Config {
 
 export function getFoundryPid(foundryAppBasePath: string): number | undefined {
     const { execSync } = require("child_process");
-    //var isWin = process.platform === "win32";
-    // if (isWin) {
-    //     return 123; // FIXME how to do this on windows?!
-    // } else {
-    //     return execSync(`pgrep -f ${foundryAppBasePath}/resources/app/main.js`).toString().split('\n').filter(Boolean).map(Number);
-    // }
+    var isWin = process.platform === "win32";
 
     try {
-        return execSync(`pgrep -f ${foundryAppBasePath}/resources/app/main.js`).toString().split('\n').filter(Boolean).map(Number);
+        if (isWin) {
+            return 123; // FIXME how to do this on windows?!
+        } else {
+            return execSync(`pgrep -f ${foundryAppBasePath}/resources/app/main.js`).toString().split('\n').filter(Boolean).map(Number);
+        }
     } catch (error) {
         return;
     }
